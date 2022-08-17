@@ -1,0 +1,19 @@
+drop table member_project;
+drop table project_interest;
+drop table member_interest;
+drop table replies;
+drop table posts;
+drop table boards;
+drop table projects;
+drop table interests;
+drop table members;
+
+drop sequence members_seq;
+drop sequence interests_seq;
+drop sequence projects_seq;
+drop sequence boards_seq;
+drop sequence posts_seq;
+drop sequence replies_seq;
+drop sequence mi_seq;
+drop sequence pi_seq;
+drop sequence mp_seq;

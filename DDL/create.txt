@@ -1,0 +1,101 @@
+create table members(
+                        m_no number(4) not null,
+                        m_id varchar2(16) not null,
+                        m_pw varchar2(20) not null,
+                        m_name varchar2(20) not null,
+                        m_nickname varchar2(20) not null,
+                        m_phone varchar2(20) not null,
+                        m_email varchar2(3) not null,
+                        m_zipcode number(5) not null,
+                        m_city varchar2(100) not null,
+                        m_street varchar2(50) not null,
+                        m_file varchar2(30) null,
+                        m_size number(7) default 0,
+                        primary key(m_no)
+);
+
+create table interests(
+                          i_no number(4) not null,
+                          i_name varchar2(20) not null,
+                          primary key(i_no)
+);
+
+create table projects(
+                         p_no number(4) not null,
+                         p_id varchar2(16) not null,
+                         p_name varchar2(20) not null,
+                         p_startday date default sysdate,
+                         p_endday date not null,
+                         p_file varchar2(30) null,
+                         p_size number(7) default 0,
+                         p_limit number(2) default 1,
+                         primary key(p_no)
+);
+
+create table boards(
+                       b_no number(4) not null,
+                       project_no number(4) not null,
+                       primary key (b_no),
+                       foreign key(project_no) references projects(p_no) on delete cascade
+);
+
+create table posts(
+                      p_no number(4) not null,
+                      p_board_no number(4) not null,
+                      p_member_no number(4) not null,
+                      p_title varchar2(50) not null,
+                      p_contents varchar2(1000) not null,
+                      p_hit number(4) default 0,
+                      p_wdate timestamp default sysdate,
+                      primary key (p_no),
+                      foreign key(p_board_no) references boards(b_no) on delete cascade,
+                      foreign key(p_member_no) references members(m_no) on delete cascade
+);
+
+create table replies(
+                        r_no number(4) not null,
+                        r_post_no number(4) not null,
+                        r_member_no number(4) not null,
+                        r_contents varchar2(500) not null,
+                        r_wdate timestamp default sysdate,
+                        primary key (r_no),
+                        foreign key(r_post_no) references posts(p_no) on delete cascade,
+                        foreign key(r_member_no) references members(m_no) on delete cascade
+);
+
+create table member_interest (
+                                 mi_no number(4) not null,
+                                 mi_member_no number(4) not null,
+                                 mi_interest_no number(4) not null,
+                                 primary key (mi_no),
+                                 foreign key (mi_member_no) references members(m_no) on delete cascade,
+                                 foreign key (mi_interest_no) references interests(i_no) on delete cascade
+);
+
+create table project_interest (
+                                  pi_no number(4) not null,
+                                  pi_project_no number(4) not null,
+                                  pi_interest_no number(4) not null,
+                                  primary key (pi_no),
+                                  foreign key (pi_project_no) references projects(p_no) on delete cascade,
+                                  foreign key (pi_interest_no) references interests(i_no) on delete cascade
+);
+
+create table member_project (
+                                mp_no number(4) not null,
+                                mp_member_no number(4) not null,
+                                mp_project_no number(4) not null,
+                                primary key (mp_no),
+                                foreign key (mp_member_no) references members(m_no) on delete cascade,
+                                foreign key (mp_project_no) references projects(p_no) on delete cascade
+);
+
+create sequence members_seq;
+create sequence interests_seq;
+create sequence projects_seq;
+create sequence boards_seq;
+create sequence posts_seq;
+create sequence replies_seq;
+create sequence mi_seq;
+create sequence pi_seq;
+create sequence mp_seq;
