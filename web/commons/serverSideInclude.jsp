@@ -20,15 +20,14 @@
     Statement stmt = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
-    String id, pw, nick;
+    String paramId, m_pw, m_name, nick, m_nick, m_phone, m_email, m_city, m_street, m_file;
     String m_nickname;
-    int gRn, gCode, gEno, gPay, gHit, sCode;
+    int gRn, gCode, gEno, gPay, gHit, sCode, m_size, m_zipcode;
     String gName, gTitle, gContent, gWriter, gEmail;
     java.util.Date gWDate, hiredate, birth;
     boolean gGender, gFlag;
     int gTotal=0, total=0, sTotal=0, cnt=0;
     String gData, gSQL, gSQL1, gSQL2, gSQL3;
-    boolean duplIdCheck=false, duplNickCheck=false;
 %>
 
 <%

@@ -9,15 +9,19 @@
 <html>
 <head>
     <title>⚡ 회원가입 - 닉네임 중복체크</title>
+    <link href="/commons/bootstrap4/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 <body>
 <%
     String Gdata = request.getParameter("nick");
 %>
-<div>
+<div class="container" align="center">
+    <div id="thumb">
+        <h1>⚡ L I G H T H O N ⚡</h1>
+    </div>
     <form name="open_form" method="get" action="/functions/nickCheck.jsp">
-        id:<input type="text" name="nick" size="10" value="<%= Gdata%>">
-        <input type="submit" value="중복처리">
+        닉네임 : <input type="text" name="nick" size="10" value="<%= Gdata%>">
+        <input type="submit" class="btn btn-warning" value="중복처리">
     </form>
 </div>
 </body>

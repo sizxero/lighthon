@@ -13,13 +13,12 @@
 </head>
 <body>
 <%
-    id = request.getParameter("id");
-
+    paramId = request.getParameter("id");
 
     gSQL = "select count(*) from members where m_id=?";
     try {
         pstmt = conn.prepareStatement(gSQL);
-        pstmt.setString(1, id);
+        pstmt.setString(1, paramId);
         rs = pstmt.executeQuery();
         if(rs.next()) {
             cnt = rs.getInt(1);
@@ -28,7 +27,7 @@
         System.out.println("error: " + e);
         cnt = 999;
     }
-    System.out.println(id + "/cnt:" + cnt);
+    System.out.println(paramId + "/cnt:" + cnt);
     if( cnt >0){
 %>
 <script type="text/javascript">
@@ -42,7 +41,8 @@
 %>
 <script type="text/javascript">
     alert("사용가능한 아이디 입니다.");
-    opener.signUpForm.id.value=<%=id%>;
+    console.log(opener.signUpForm.id.value)
+    opener.signUpForm.id.value= '<%=paramId%>';
     opener.signUpForm.pw.focus();
     self.close();
 </script>
