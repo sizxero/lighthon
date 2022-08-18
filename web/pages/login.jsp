@@ -42,7 +42,7 @@
                 </tr>
                 <tr>
                     <th width="15%">PWD</th>
-                    <td width="60%"><input type="password" id="pwd" name="pwd"></td>
+                    <td width="60%"><input type="password" id="pw" name="pw"></td>
                 </tr>
             </tbody>
         </table>

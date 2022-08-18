@@ -20,6 +20,8 @@
     Statement stmt = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
+    String id, pw;
+    String m_nickname;
     int gRn, gCode, gEno, gPay, gHit, sCode;
     String gName, gTitle, gContent, gWriter, gEmail;
     java.util.Date gWDate, hiredate, birth;

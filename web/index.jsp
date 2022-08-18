@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="/commons/serverSideInclude.jsp"%>
 <html>
   <head>
     <title>⚡ 번개발자 ⚡</title>
@@ -31,13 +32,25 @@
     <div id="thumb">
       <h1>⚡ L I G H T H O N ⚡</h1>
   <%
-    if(session.getAttribute("id") == null) {
+    id = (String) session.getAttribute("id");
+    if(id == null) {
   %>
       <p>번갯불에 콩 구워먹듯 개발하고 싶다면?</p>
   <%
     } else {
+      gSQL = "select m_nickname from members where m_id=?";
+      try {
+        pstmt = conn.prepareStatement(gSQL);
+        pstmt.setString(1, id);
+        rs = pstmt.executeQuery();
+        if(rs.next())
+          m_nickname = rs.getString(1);
+      } catch (Exception e) {
+        System.out.println("error: " + e);
+        m_nickname=null;
+      }
   %>
-      <p>님, 환영합니다.</p>
+      <p><%= m_nickname%>님, 환영합니다.</p>
   <%
     }
   %>
@@ -60,7 +73,7 @@
       } else {
     %>
         <a class="nav-item nav-link" href="#">MyPage</a>
-        <a class="nav-item nav-link" href="#">Logout</a>
+        <a class="nav-item nav-link" href="functions/logout.jsp">Logout</a>
     <%
       }
     %>
