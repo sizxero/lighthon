@@ -48,7 +48,7 @@
         </table>
     </form>
     <div id="sub-link">
-        <a href="" class="btn btn-outline-warning">회원가입</a>
+        <a href="signup.jsp" class="btn btn-outline-warning">회원가입</a>
         <a href="" class="btn btn-outline-warning">ID/PW 찾기</a>
     </div>
 </div>

@@ -20,7 +20,7 @@
     Statement stmt = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
-    String id, pw;
+    String id, pw, nick;
     String m_nickname;
     int gRn, gCode, gEno, gPay, gHit, sCode;
     String gName, gTitle, gContent, gWriter, gEmail;
@@ -28,6 +28,7 @@
     boolean gGender, gFlag;
     int gTotal=0, total=0, sTotal=0, cnt=0;
     String gData, gSQL, gSQL1, gSQL2, gSQL3;
+    boolean duplIdCheck=false, duplNickCheck=false;
 %>
 
 <%
