@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
 <head>
     <title>⚡ 팀원찾기</title>
@@ -43,6 +44,7 @@
         <tr>
             <th rowspan="5" colspan="1" width="25%" align="center">
                 <div><img width="150px" height="150px" src="/storage/<%=m_file%>"></div>
+                <a class="btn btn-warning" href="/functions/downloadPicture.jsp?filename=<%=m_file%>">사진 다운로드</a>
             </th>
         </tr>
         <tr>
