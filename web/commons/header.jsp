@@ -62,16 +62,16 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" href="">Explore</a>
+            <a class="nav-item nav-link" href="/pages/explore-member.jsp">Explore</a>
             <a class="nav-item nav-link" href="#">FreeBoard</a>
             <%
                 if(session.getAttribute("id") == null) {
             %>
-            <a class="nav-item nav-link" href="pages/login.jsp">Login</a>
+            <a class="nav-item nav-link" href="/pages/login.jsp">Login</a>
             <%
             } else {
             %>
-            <a class="nav-item nav-link" href="pages/mypage.jsp">MyPage</a>
+            <a class="nav-item nav-link" href="/pages/mypage.jsp">MyPage</a>
             <a class="nav-item nav-link" href="../functions/logout.jsp">Logout</a>
             <%
                 }

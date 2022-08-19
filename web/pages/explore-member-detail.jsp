@@ -2,21 +2,22 @@
   Created by IntelliJ IDEA.
   User: gsu07
   Date: 2022-08-19
-  Time: 오후 1:12
+  Time: 오후 2:50
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>⚡ <%=session.getAttribute("id")%>의 페이지</title>
+    <title>⚡ 팀원찾기</title>
 </head>
 <body>
 <%@ include file="/commons/header.jsp"%>
 <%
-    gSQL = "select * from members where m_id=?";
+    paramMNo = Integer.parseInt(request.getParameter("code"));
+    gSQL = "select * from members where m_no=?";
     try {
         pstmt = conn.prepareStatement(gSQL);
-        pstmt.setString(1, (String)session.getAttribute("id"));
+        pstmt.setInt(1, paramMNo);
         rs = pstmt.executeQuery();
         if(rs.next()) {
             m_name = rs.getString(4);
@@ -37,12 +38,11 @@
 %>
 <div class="container" align="center">
     <p/>
-    <h2 align="left">내 정보</h2>
+    <h2 align="left"><%=m_name%>님의 정보</h2>
     <table class="table table-bordered">
         <tr>
             <th rowspan="5" colspan="1" width="25%" align="center">
                 <div><img width="150px" height="150px" src="/storage/<%=m_file%>"></div>
-                <button class="btn btn-outline-warning">이미지 변경</button>
             </th>
         </tr>
         <tr>
@@ -72,8 +72,7 @@
             <td colspan="3"><%=m_street%></td>
         </tr>
     </table>
-    <a href="" class="btn btn-warning">수정</a>
-    <a href="../index.jsp" class="btn btn-outline-warning">취소</a>
+    <a href=explore-member.jsp class="btn btn-outline-warning">취소</a>
 </div>
 </body>
 </html>
