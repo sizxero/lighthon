@@ -20,7 +20,7 @@
     Statement stmt = null;
     PreparedStatement pstmt = null;
     ResultSet rs = null;
-    String paramId, m_pw, m_name, nick, m_nick, m_phone, m_email, m_city, m_street, m_file;
+    String id, pw, paramId, m_id, m_pw, m_name, nick, m_nick, m_phone, m_email, m_city, m_street, m_file;
     String m_nickname;
     int gRn, gCode, gEno, gPay, gHit, sCode, m_size, m_zipcode;
     String gName, gTitle, gContent, gWriter, gEmail;
