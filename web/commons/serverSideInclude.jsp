@@ -11,6 +11,7 @@
 <%@ page import="java.sql.*" %>
 <html>
 <head>
+    <link rel="stylesheet" href="/commons/bootstrap4/bootstrap.min.css">
 </head>
 <body>
 

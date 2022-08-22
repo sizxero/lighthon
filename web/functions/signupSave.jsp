@@ -9,7 +9,8 @@
 <%@ include file="/commons/serverSideInclude.jsp"%>
 <%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@ page import="com.oreilly.servlet.MultipartRequest"%>
-<%@ page import="java.io.File" %>
+<%@ page import="lighthon.dto.MemberDTO" %>
+<%@ page import="lighthon.dao.MemberDAO" %>
 <html>
 <head>
     <title>⚡ 회원가입</title>
@@ -34,25 +35,9 @@
     else
         m_size = 0;
 
-    gSQL = "insert into members values (members_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    try {
-        pstmt = conn.prepareStatement(gSQL);
-        pstmt.setString(1, m_id);
-        pstmt.setString(2, m_pw);
-        pstmt.setString(3, m_name);
-        pstmt.setString(4, m_nickname);
-        pstmt.setString(5, m_phone);
-        pstmt.setString(6, m_email);
-        pstmt.setInt(7, m_zipcode);
-        pstmt.setString(8, m_city);
-        pstmt.setString(9, m_street);
-        pstmt.setString(10, m_file);
-        pstmt.setInt(11, m_size);
-        pstmt.executeUpdate();
-    } catch (Exception e) {
-        System.out.println("error: " + e);
-    }
-    System.out.println("가입 성공");
+    MemberDTO dto = new MemberDTO(m_id, m_pw, m_name, m_nickname, m_phone, m_email, m_zipcode, m_city, m_street, m_file, m_size);
+    MemberDAO dao = new MemberDAO();
+    dao.insertMember(dto);
     response.sendRedirect("../pages/login.jsp");
 %>
 </body>

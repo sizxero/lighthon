@@ -6,11 +6,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/commons/serverSideInclude.jsp"%>
+<%@ page import="lighthon.dao.SSI" %>
 <html>
 <head>
     <title>⚡ 회원가입</title>
-    <link href="/commons/bootstrap4/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link href="/commons/bootstrap4/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: lightgray;
@@ -54,6 +54,16 @@
         tr > td:nth-child(3){
             text-align: left;
         }
+
+        div#preview {
+            width: 150px;
+            height: 150px;
+            border: solid 1px;
+        }
+
+        input[type=file] {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -62,7 +72,7 @@
             <h1>⚡ L I G H T H O N ⚡</h1>
             <p>환영합니다.</p>
         </div>
-        <form action="/functions/signupSave.jsp" name="signUpForm" method="post"  enctype="multipart/form-data" onsubmit="return checkNull()">
+        <form action="/functions/signupSave.jsp" name="signUpForm" method="post"  enctype="multipart/form-data" onsubmit="return finalCheck()">
             <table>
                 <tr>
                     <th>아이디</th>
@@ -116,7 +126,14 @@
                 </tr>
                 <tr>
                     <th>프로필 사진</th>
-                    <td><input type="file" name="file1"></td>
+                    <td>
+                        <label for="file1">
+                            <div id="preview">
+                                <img src="/storage/default.jpeg" width="100%" alt="">
+                            </div>
+                        </label>
+                        <input type="file" id="file1" name="file1">
+                    </td>
                     <td></td>
                 </tr>
             </table>   
@@ -124,6 +141,39 @@
         </form>
     </div>
     <script type="text/javascript">
+        function readImage(input) {
+            const previewDiv = document.querySelector('#preview');
+            previewDiv.innerHTML = "";
+            // 파일이 있는 경우
+            if (input.files && input.files[0]) {
+                for (var i = 0; i < input.files.length; i++) {
+                    let readFileURL = URL.createObjectURL(input.files[i]);
+                    previewDiv.innerHTML = `
+                    <img src="` + readFileURL + `" width="100%" height="100%" alt="">
+                    `;
+                }
+            }
+        }
+
+        let inputFile = document.querySelector('input#file1');
+        inputFile.onchange = (e) => {
+            readImage(e.currentTarget);
+        }
+    </script>
+    <script type="text/javascript">
+        const finalCheck = () => {
+            console.log('jsp id dupl', <%=  SSI.duplIdCheck %> )
+            console.log('jsp nick dupl', <%= SSI.duplNickCheck %>)
+            if(<%= SSI.duplIdCheck && SSI.duplNickCheck %>) {
+                return checkNull();
+            } else {
+                if(!<%= SSI.duplIdCheck %>)
+                   alert("아이디 중복 체크 미완료");
+                if(!<%= SSI.duplNickCheck %>)
+                    alert("닉네임 중복 체크 미완료");
+                return false;
+            }
+        }
         const duplIdCheck = () => {
             window.open("popup/idCheck.jsp?id="+signUpForm.id.value, "bb", "width=600, height=150, top=400, left=400");
         }

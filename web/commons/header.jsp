@@ -6,10 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/commons/serverSideInclude.jsp"%>
+<%@ page import="lighthon.dao.MemberDAO" %>
 <html>
 <head>
-    <link href="/commons/bootstrap4/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link href="/commons/bootstrap4/bootstrap.min.css" rel="stylesheet">
     <style>
         #thumb {
             padding-top:20%;
@@ -31,25 +31,16 @@
     <div id="thumb">
         <h1>⚡ L I G H T H O N ⚡</h1>
         <%
-            id = (String) session.getAttribute("id");
-            if(id == null) {
+            String paramId = (String) session.getAttribute("id");
+            if(paramId == null) {
         %>
         <p>번갯불에 콩 구워먹듯 개발하고 싶다면?</p>
         <%
         } else {
-            gSQL = "select m_nickname from members where m_id=?";
-            try {
-                pstmt = conn.prepareStatement(gSQL);
-                pstmt.setString(1, id);
-                rs = pstmt.executeQuery();
-                if(rs.next())
-                    m_nickname = rs.getString(1);
-            } catch (Exception e) {
-                System.out.println("error: " + e);
-                m_nickname=null;
-            }
+            MemberDAO dao = new MemberDAO();
+            String nick = dao.findNicknameById(paramId);
         %>
-        <p><%= m_nickname%>님, 환영합니다.</p>
+        <p><%= nick%>님, 환영합니다.</p>
         <%
             }
         %>

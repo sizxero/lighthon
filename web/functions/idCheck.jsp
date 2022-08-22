@@ -6,29 +6,16 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/commons/serverSideInclude.jsp"%>
+<%@ page import="lighthon.dao.MemberDAO" %>
 <html>
 <head>
     <title>⚡ 회원가입 - 아이디 중복 체크</title>
 </head>
 <body>
 <%
-    paramId = request.getParameter("id");
-
-    gSQL = "select count(*) from members where m_id=?";
-    try {
-        pstmt = conn.prepareStatement(gSQL);
-        pstmt.setString(1, paramId);
-        rs = pstmt.executeQuery();
-        if(rs.next()) {
-            cnt = rs.getInt(1);
-        }
-    } catch(Exception e) {
-        System.out.println("error: " + e);
-        cnt = 999;
-    }
-    System.out.println(paramId + "/cnt:" + cnt);
-    if( cnt >0){
+    String paramId = request.getParameter("id");
+    MemberDAO dao = new MemberDAO();
+    if(dao.isExistId(paramId)){
 %>
 <script type="text/javascript">
     alert("이미 사용중인 아이디입니다.");

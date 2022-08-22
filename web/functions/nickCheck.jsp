@@ -6,31 +6,17 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="/commons/serverSideInclude.jsp"%>
+<%@ page import="lighthon.dao.MemberDAO" %>
 <html>
 <head>
     <title>⚡ 회원가입 - 닉네임 중복 체크</title>
-    <link href="/commons/bootstrap4/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="/commons/bootstrap4/bootstrap.min.css">
 </head>
 <body>
 <%
-    nick = request.getParameter("nick");
-
-
-    gSQL = "select count(*) from members where m_nickname=?";
-    try {
-        pstmt = conn.prepareStatement(gSQL);
-        pstmt.setString(1, nick);
-        rs = pstmt.executeQuery();
-        if(rs.next()) {
-            cnt = rs.getInt(1);
-        }
-    } catch(Exception e) {
-        System.out.println("error: " + e);
-        cnt = 999;
-    }
-    System.out.println(nick + "/cnt:" + cnt);
-    if( cnt >0){
+    String paramNick = request.getParameter("nick");
+    MemberDAO dao = new MemberDAO();
+    if(dao.isExistNickname(paramNick)){
 %>
 <script type="text/javascript">
     alert("이미 사용중인 닉네임입니다.");
@@ -43,7 +29,7 @@
 %>
 <script type="text/javascript">
     alert("사용가능한 닉네임입니다.");
-    opener.signUpForm.nick.value='<%=nick%>';
+    opener.signUpForm.nick.value='<%=paramNick%>';
     opener.signUpForm.phone.focus();
     self.close();
 </script>

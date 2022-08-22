@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>⚡ 회원가입 - 닉네임 중복체크</title>
-    <link href="/commons/bootstrap4/bootstrap.min.css" rel="stylesheet" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="/commons/bootstrap4/bootstrap.min.css">
 </head>
 <body>
 <%

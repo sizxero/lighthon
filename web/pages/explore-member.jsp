@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="dto.ExploreMemberDTO" %>
+<%@ page import="lighthon.dto.MemberInfoDTO" %>
 <%@ page import="java.util.ArrayList" %>
 <html>
 <head>
@@ -70,75 +70,30 @@
         startPage = ((pageNum/pageCount)-1)*pageCount + 1;
         endPage = (pageNum/pageCount)*pageCount;
     }
-    System.out.println("처음에" + startPage+"~"+endPage);
 %>
 <%
+    MemberDAO dao = new MemberDAO();
     String region = request.getParameter("region");
+    int resultCnt;
     if(region == null || region.equals(""))
-        gSQL = "select count(*) from members";
+        resultCnt = dao.allMemberCnt();
     else
-        gSQL = "select count(*) from members where M_CITY like '" +region+"%'";
-    try {
-        stmt = conn.createStatement();
-        rs = stmt.executeQuery(gSQL);
-        if(rs.next()) {
-            cnt = rs.getInt(1);
-        }
-    } catch(Exception e) {
-        System.out.println("error: " + e);
-    }
-    totalPage = cnt/pageSize + 1;
-    if(endPage > cnt/pageSize) {
+        resultCnt = dao.searchRegionMemberCnt(region);
+
+    totalPage = resultCnt/pageSize + 1;
+    if(endPage > resultCnt/pageSize) {
         endPage = totalPage;
     }
-    if(cnt == pageSize)
+    if(resultCnt == pageSize)
         endPage = --totalPage;
-
-    System.out.println("재지정" + startPage+"~"+endPage);
 %>
 <%
-    ArrayList<ExploreMemberDTO> dtos = new ArrayList<>();
-    if(region == null || region.equals("")) {
-        gSQL = "select * from (select rownum rn, m_no, m_file, m_name, m_city from members) where rn between ? and ?";
-        try {
-            pstmt = conn.prepareStatement(gSQL);
-            pstmt.setInt(1, start);
-            pstmt.setInt(2, end);
-            rs = pstmt.executeQuery();
-            while(rs.next()) {
-                m_no = rs.getInt(2);
-                m_file = rs.getString(3);
-                m_name = rs.getString(4);
-                m_city = rs.getString(5);
-
-                ExploreMemberDTO dto = new ExploreMemberDTO(m_no, m_file, m_name, m_city);
-                dtos.add(dto);
-            }
-        } catch(Exception e) {
-            System.out.println("error: " + e);
-        }
-    } else {
-        gSQL = "select * from (select rownum rn, m_no, m_file, m_name, m_city from members where M_CITY like ? || '%') where rn between ? and ?";
-        try {
-            pstmt = conn.prepareStatement(gSQL);
-            pstmt.setString(1, region);
-            pstmt.setInt(2, start);
-            pstmt.setInt(3, end);
-            rs = pstmt.executeQuery();
-            while(rs.next()) {
-                m_no = rs.getInt(2);
-                m_file = rs.getString(3);
-                m_name = rs.getString(4);
-                m_city = rs.getString(5);
-
-                ExploreMemberDTO dto = new ExploreMemberDTO(m_no, m_file, m_name, m_city);
-                dtos.add(dto);
-            }
-        } catch(Exception e) {
-            System.out.println("error: " + e);
-        }
+    ArrayList<MemberInfoDTO> dtos;
+    if(region == null || region.equals(""))
+        dtos = dao.findAllMembers(start, end);
+    else {
+        dtos = dao.findAllMembersSearchByRegion(region, start, end);
     }
-
 %>
 <div class="container">
     <div id="page-info">
@@ -168,7 +123,7 @@
     </div>
     <div class="container" id="members_container">
         <%
-            for (ExploreMemberDTO dto: dtos) {
+            for (MemberInfoDTO dto: dtos) {
                 String[] addrArr = dto.getCity().split(" ");
                 String address = addrArr[0] + " " + addrArr[1];
 

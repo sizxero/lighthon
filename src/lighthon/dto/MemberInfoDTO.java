@@ -1,12 +1,12 @@
-package dto;
+package lighthon.dto;
 
-public class ExploreMemberDTO {
+public class MemberInfoDTO {
     private int no;
     private String file;
     private String name;
     private String city;
 
-    public ExploreMemberDTO(int no, String file, String name, String city) {
+    public MemberInfoDTO(int no, String file, String name, String city) {
         this.no = no;
         this.file = file;
         this.name = name;
