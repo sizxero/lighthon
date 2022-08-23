@@ -34,7 +34,7 @@ create table projects(
 
 create table boards(
                        b_no number(4) not null,
-                       project_no number(4) not null,
+                       b_project_no number(4) not null,
                        primary key (b_no),
                        foreign key(project_no) references projects(p_no) on delete cascade
 );
