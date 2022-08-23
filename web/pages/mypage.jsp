@@ -59,7 +59,7 @@
             <td colspan="3"><%=dto.getStreet()%></td>
         </tr>
     </table>
-    <a href="updateMyInfo.jsp?" class="btn btn-warning">수정</a>
+    <a href="update-my-info.jsp?" class="btn btn-warning">수정</a>
     <a href="../index.jsp" class="btn btn-outline-warning">취소</a>
 </div>
 </body>

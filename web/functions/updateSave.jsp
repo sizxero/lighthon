@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: gsu07
-  Date: 2022-08-18
-  Time: 오후 4:23
+  Date: 2022-08-23
+  Time: 오전 11:08
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -12,7 +12,7 @@
 <%@ page import="lighthon.dao.MemberDAO" %>
 <html>
 <head>
-    <title>⚡ 회원가입</title>
+    <title>⚡ 회원정보 수정</title>
 </head>
 <body>
 <%
@@ -36,7 +36,7 @@
     MemberDTO dto = new MemberDTO(m_id, m_pw, m_name, m_nickname, m_phone, m_email, m_zipcode, m_city, m_street, m_file, m_size);
     MemberDAO dao = new MemberDAO();
     dao.updateMember(dto);
-    response.sendRedirect("../pages/login.jsp");
+    response.sendRedirect("../pages/mypage.jsp");
 %>
 </body>
 </html>

@@ -222,4 +222,26 @@ public class MemberDAO extends SSI {
             System.out.println("error: " + e);
         }
     }
+
+    public void updateMember(MemberDTO dto) {
+        SQL = "update members set m_pw=?, m_name=?, m_nickname=?, m_phone=?, m_email=?, m_zipcode=?, m_city=?, m_street=?, m_file=?, m_size=?" +
+                "where m_id=?";
+        try {
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setString(1, dto.getPw());
+            pstmt.setString(2, dto.getName());
+            pstmt.setString(3, dto.getNickname());
+            pstmt.setString(4, dto.getPhone());
+            pstmt.setString(5, dto.getEmail());
+            pstmt.setInt(6, dto.getZipcode());
+            pstmt.setString(7, dto.getCity());
+            pstmt.setString(8, dto.getStreet());
+            pstmt.setString(9, dto.getFile());
+            pstmt.setInt(10, dto.getSize());
+            pstmt.setString(11, dto.getId());
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
+    }
 }
