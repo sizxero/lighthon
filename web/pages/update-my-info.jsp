@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="lighthon.dto.MemberDetailDTO" %>
+<%@ page import="lighthon.dto.members.MemberDetailDTO" %>
 <%@ page import="lighthon.dao.MemberDAO" %>
 <html>
 <head>

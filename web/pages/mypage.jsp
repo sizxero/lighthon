@@ -1,4 +1,4 @@
-<%@ page import="lighthon.dto.MemberDetailDTO" %>
+<%@ page import="lighthon.dto.members.MemberDetailDTO" %>
 <%@ page import="lighthon.dao.MemberDAO" %><%--
   Created by IntelliJ IDEA.
   User: gsu07

@@ -1,4 +1,4 @@
-package lighthon.dto;
+package lighthon.dto.members;
 
 public class MemberInfoDTO {
     private int no;

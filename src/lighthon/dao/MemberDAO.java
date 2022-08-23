@@ -1,8 +1,8 @@
 package lighthon.dao;
 
-import lighthon.dto.MemberDTO;
-import lighthon.dto.MemberDetailDTO;
-import lighthon.dto.MemberInfoDTO;
+import lighthon.dto.members.MemberDTO;
+import lighthon.dto.members.MemberDetailDTO;
+import lighthon.dto.members.MemberInfoDTO;
 
 import java.util.ArrayList;
 

@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
 <%@ page import="com.oreilly.servlet.MultipartRequest"%>
-<%@ page import="lighthon.dto.MemberDTO" %>
+<%@ page import="lighthon.dto.members.MemberDTO" %>
 <%@ page import="lighthon.dao.MemberDAO" %>
 <html>
 <head>

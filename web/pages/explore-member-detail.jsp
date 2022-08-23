@@ -1,5 +1,5 @@
 <%@ page import="lighthon.dao.MemberDAO" %>
-<%@ page import="lighthon.dto.MemberDetailDTO" %><%--
+<%@ page import="lighthon.dto.members.MemberDetailDTO" %><%--
   Created by IntelliJ IDEA.
   User: gsu07
   Date: 2022-08-19
