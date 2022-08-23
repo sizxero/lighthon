@@ -40,7 +40,15 @@
         %>
         <tr>
             <td><%=dto.getRn()%></td>
-            <td><a href="post-detail.jsp?postno=<%=dto.getNo()%>"><%=dto.getTitle()%></a></td>
+            <td>
+                <a href="post-detail.jsp?postno=<%=dto.getNo()%>"><%=dto.getTitle()%></a>
+                <%
+                    int replyCnt = dao.replyCnt(dto.getNo());
+                    if(replyCnt != 0) {
+                        out.print("[" + replyCnt + "]");
+                    }
+                %>
+            </td>
             <td><%=dto.getNickname()%></td>
             <td><%=dto.getWdate()%></td>
             <td><%=dto.getHit()%></td>

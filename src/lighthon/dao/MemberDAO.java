@@ -1,5 +1,6 @@
 package lighthon.dao;
 
+import lighthon.dto.members.CompactMemberInfoDTO;
 import lighthon.dto.members.MemberDTO;
 import lighthon.dto.members.MemberDetailDTO;
 import lighthon.dto.members.MemberInfoDTO;
@@ -43,6 +44,20 @@ public class MemberDAO extends SSI {
             System.out.println("error: " + e);
         }
         return mId;
+    }
+
+    public int findNoByNickname(String nick) {
+        SQL = "select m_no from members where m_nickname=?";
+        try {
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setString(1, nick);
+            rs = pstmt.executeQuery();
+            if(rs.next())
+                mNo = rs.getInt(1);
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
+        return mNo;
     }
 
     public String findNicknameById(String id) {
@@ -122,6 +137,38 @@ public class MemberDAO extends SSI {
             cnt = 999;
         }
         return cnt >= 1;
+    }
+
+    public CompactMemberInfoDTO findMemberByIdCompact(String id) {
+        CompactMemberInfoDTO dto = null;
+        try {
+            SQL = "select m_nickname, m_file from members where m_id=?";
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setString(1, id);
+            rs = pstmt.executeQuery();
+            if(rs.next()){
+                dto = new CompactMemberInfoDTO(rs.getString(1), rs.getString(2));
+            }
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
+        return dto;
+    }
+
+    public CompactMemberInfoDTO findMemberByNoCompact(int no) {
+        CompactMemberInfoDTO dto = null;
+        try {
+            SQL = "select m_nickname, m_file from members where m_no=?";
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, no);
+            rs = pstmt.executeQuery();
+            if(rs.next()){
+                dto = new CompactMemberInfoDTO(rs.getString(1), rs.getString(2));
+            }
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
+        return dto;
     }
 
     public MemberDetailDTO findMemberById(String id) {

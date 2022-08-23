@@ -1,9 +1,6 @@
 package lighthon.dao;
 
-import lighthon.dto.boards.BoardDTO;
-import lighthon.dto.boards.FreePostInsertDTO;
-import lighthon.dto.boards.ReplyDTO;
-import lighthon.dto.boards.UpdatePostDTO;
+import lighthon.dto.boards.*;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -67,7 +64,7 @@ public class BoardDAO extends SSI {
     public ArrayList<BoardDTO> findAllFreePost() {
         arrList = new ArrayList<BoardDTO>();
         try {
-            SQL = "select * from (select rownum rn, p_no, p_title, p_member_no, p_hit, p_wdate from posts where p_board_no = 0)";
+            SQL = "select rownum rn, p.* from (select p_no, p_title, p_member_no, p_hit, p_wdate from posts where p_board_no = 0) p order by p.p_no desc";
             pstmt = conn.prepareStatement(SQL);
             rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -131,6 +128,18 @@ public class BoardDAO extends SSI {
 
     public ArrayList<ReplyDTO> findAllReply(int postId) {
         arrList = new ArrayList<ReplyDTO>();
+        try {
+            SQL = "select * from replies where r_post_no=?";
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, postId);
+            rs = pstmt.executeQuery();
+            while(rs.next()){
+                ReplyDTO dto= new ReplyDTO(rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getDate(5));
+                arrList.add(dto);
+            }
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
         return arrList;
     }
 
@@ -139,8 +148,18 @@ public class BoardDAO extends SSI {
         return dto;
     }
 
-    public void insertReply() {
-
+    public void insertReply(InsertReplyDTO dto) {
+        try {
+            SQL = "insert into replies values(replies_seq.nextval, ?, ?, ?, sysdate)";
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, dto.getPostNo());
+            mNo = dao.findNoById(dto.getMemberId());
+            pstmt.setInt(2, mNo);
+            pstmt.setString(3, dto.getContents());
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
     }
 
     public void updateReply() {
