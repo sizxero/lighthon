@@ -16,11 +16,41 @@ public class MemberDAO extends SSI {
         }
     }
 
+    public int findNoById(String id) {
+        SQL = "select m_no from members where m_id=?";
+        try {
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setString(1, id);
+            rs = pstmt.executeQuery();
+            if(rs.next())
+                mNo = rs.getInt(1);
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+            mNo=-1;
+        }
+        return mNo;
+    }
+
     public String findNicknameById(String id) {
         SQL = "select m_nickname from members where m_id=?";
         try {
             pstmt = conn.prepareStatement(SQL);
             pstmt.setString(1, id);
+            rs = pstmt.executeQuery();
+            if(rs.next())
+                mNickName = rs.getString(1);
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+            mNickName=null;
+        }
+        return mNickName;
+    }
+
+    public String findNicknameByNo(int no) {
+        SQL = "select m_nickname from members where m_no=?";
+        try {
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, no);
             rs = pstmt.executeQuery();
             if(rs.next())
                 mNickName = rs.getString(1);
