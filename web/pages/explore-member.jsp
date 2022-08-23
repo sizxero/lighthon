@@ -63,13 +63,13 @@
         pageNum = Integer.parseInt(pnum);
     start = pageSize*(pageNum-1) + 1;
     end = pageSize*pageNum;
+
     if(pageNum%pageCount != 0) {
         startPage = (pageNum/pageCount)*pageCount+1;
-        endPage = (pageNum/pageCount+1) * pageCount;
     } else {
-        startPage = ((pageNum/pageCount)-1)*pageCount + 1;
-        endPage = (pageNum/pageCount)*pageCount;
+        startPage = ((pageNum/pageCount)-1)*pageCount +1;
     }
+    endPage = startPage+pageCount-1;
 %>
 <%
     MemberDAO dao = new MemberDAO();
@@ -81,11 +81,8 @@
         resultCnt = dao.searchRegionMemberCnt(region);
 
     totalPage = resultCnt/pageSize + 1;
-    if(endPage > resultCnt/pageSize) {
-        endPage = totalPage;
-    }
-    if(resultCnt == pageSize)
-        endPage = --totalPage;
+    if(resultCnt%pageSize == 0)
+        totalPage = resultCnt/pageSize;
 %>
 <%
     ArrayList<MemberInfoDTO> dtos;
@@ -146,16 +143,17 @@
 
     <div id="pagination" align="center">
         <%
+            System.out.println(startPage + "~" + endPage);
             if(region == null || region.equals(""))
                 returnPage="explore-member.jsp?";
             else
                 returnPage="explore-member.jsp?region="+region+"&";
             if(startPage != 1)
                 out.println("<a class='btn btn-outline-warning' href='" + returnPage +"page=" + (startPage-1) + "'><<</a>");
-            for(int i = startPage; i <= endPage; i++) {
+            for(int i = startPage; i <= endPage && i<=totalPage; i++) {
                 out.println("<a class='btn btn-outline-warning' href='" + returnPage +"page=" + i +"'>" + i + "</a>");
             }
-            if(endPage != totalPage)
+            if(endPage <= totalPage)
                 out.println("<a class='btn btn-outline-warning' href='" + returnPage +"page=" + (endPage+1) + "'>>></a>");
         %>
     </div>
