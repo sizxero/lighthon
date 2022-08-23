@@ -5,6 +5,7 @@ import lighthon.dto.boards.FreePostInsertDTO;
 import lighthon.dto.boards.ReplyDTO;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class BoardDAO extends SSI {
 
@@ -65,18 +66,42 @@ public class BoardDAO extends SSI {
     public ArrayList<BoardDTO> findAllFreePost() {
         arrList = new ArrayList<BoardDTO>();
         try {
-            SQL = "select * from (select rownum rn, p_title, p_member_no, p_hit, p_wdate from posts where p_board_no = 0)";
+            SQL = "select * from (select rownum rn, p_no, p_title, p_member_no, p_hit, p_wdate from posts where p_board_no = 0)";
             pstmt = conn.prepareStatement(SQL);
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                String memberNick = dao.findNicknameByNo(rs.getInt(3));
-                BoardDTO dto = new BoardDTO(rs.getInt(1), rs.getString(2), memberNick, rs.getInt(4), rs.getDate(5));
+                String memberNick = dao.findNicknameByNo(rs.getInt(4));
+                BoardDTO dto = new BoardDTO(rs.getInt(1), rs.getInt(2), rs.getString(3), memberNick, rs.getInt(5), rs.getDate(6));
                 arrList.add(dto);
             }
         } catch(Exception e) {
             System.out.println("error: " + e);
         }
         return arrList;
+    }
+
+    public PostDetailDTO findPostById(int postId) {
+        PostDetailDTO dto = null;
+        try {
+            SQL = "select p_member_no, p_title, p_contents, p_hit, p_wdate from posts where p_no=?";
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, postId);
+            rs = pstmt.executeQuery();
+            int hitupdate = 0;
+            while(rs.next()) {
+                String memberNick = dao.findNicknameByNo(rs.getInt(1));
+                hitupdate = rs.getInt(4);
+                dto = new PostDetailDTO(memberNick, rs.getString(2), rs.getString(3), hitupdate++, rs.getDate(5));
+            }
+            SQL2 = "update posts set p_hit=? where p_no=?";
+            pstmt = conn.prepareStatement(SQL2);
+            pstmt.setInt(1, hitupdate);
+            pstmt.setInt(2, postId);
+            pstmt.executeUpdate();
+        } catch(Exception e) {
+            System.out.println("error: " + e);
+        }
+        return dto;
     }
 
     public void updatePost(int postId) {

@@ -49,7 +49,6 @@
             <input type="submit" value="등록" class="btn btn-warning">
             <a href="freeboard.jsp" class="btn btn-outline-warning">취소</a>
         </div>
-
     </form>
 </div>
 </body>

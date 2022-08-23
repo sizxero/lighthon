@@ -40,7 +40,7 @@
         %>
         <tr>
             <td><%=dto.getRn()%></td>
-            <td><%=dto.getTitle()%></td>
+            <td><a href="post-detail.jsp?postno=<%=dto.getNo()%>"><%=dto.getTitle()%></a></td>
             <td><%=dto.getNickname()%></td>
             <td><%=dto.getWdate()%></td>
             <td><%=dto.getHit()%></td>
