@@ -26,6 +26,7 @@
 <%
     int paramPostNo = Integer.parseInt(request.getParameter("postno"));
     BoardDAO dao = new BoardDAO();
+    MemberDAO dao2 = new MemberDAO();
     PostDetailDTO dto = dao.findPostById(paramPostNo);
 %>
 
@@ -48,8 +49,15 @@
         </tr>
     </table>
     <div class="button-wrapper">
-        <input type="submit" value="등록" class="btn btn-warning">
-        <a href="freeboard.jsp" class="btn btn-outline-warning">취소</a>
+        <%
+            if(dao2.findNicknameById((String)session.getAttribute("id")).equals(dto.getWriter())) {
+        %>
+        <a href="updatePost.jsp?postno=<%=paramPostNo%>" class="btn btn-warning">수정</a>
+        <a href="../functions/deletePost.jsp?postno=<%=paramPostNo%>" class="btn btn-warning">삭제</a>
+        <%
+            }
+        %>
+        <a href="freeboard.jsp" class="btn btn-outline-warning">목록</a>
     </div>
 </div>
 </body>

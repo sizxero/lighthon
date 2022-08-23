@@ -3,6 +3,7 @@ package lighthon.dao;
 import lighthon.dto.boards.BoardDTO;
 import lighthon.dto.boards.FreePostInsertDTO;
 import lighthon.dto.boards.ReplyDTO;
+import lighthon.dto.boards.UpdatePostDTO;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -104,12 +105,28 @@ public class BoardDAO extends SSI {
         return dto;
     }
 
-    public void updatePost(int postId) {
-
+    public void updatePost(UpdatePostDTO dto, int postId) {
+        try {
+            SQL = "update posts set p_title=?, p_contents=? where p_no=?";
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setString(1, dto.getTitle());
+            pstmt.setString(2, dto.getContents());
+            pstmt.setInt(3, postId);
+            pstmt.executeUpdate();
+        } catch(Exception e) {
+            System.out.println("error: " + e);
+        }
     }
 
     public void deletePost(int postId) {
-
+        try {
+            SQL = "delete from posts where p_no=?";
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, postId);
+            pstmt.executeUpdate();
+        } catch(Exception e) {
+            System.out.println("error: " + e);
+        }
     }
 
     public ArrayList<ReplyDTO> findAllReply(int postId) {
