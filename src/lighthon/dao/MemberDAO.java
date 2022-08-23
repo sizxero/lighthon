@@ -16,16 +16,6 @@ public class MemberDAO extends SSI {
         }
     }
 
-    public boolean getDuplIdCheck() {
-        System.out.println("get" + duplIdCheck);
-        return duplIdCheck;
-    }
-
-    public boolean getDuplNickCheck() {
-        System.out.println("get" + duplNickCheck);
-        return duplNickCheck;
-    }
-
     public String findNicknameById(String id) {
         SQL = "select m_nickname from members where m_id=?";
         try {
@@ -67,8 +57,6 @@ public class MemberDAO extends SSI {
             if(rs.next()) {
                 cnt = rs.getInt(1);
             }
-            duplIdCheck = (cnt == 0);
-            System.out.println("id중복: " + duplIdCheck);
         } catch(Exception e) {
             System.out.println("error: " + e);
             cnt = 999;
@@ -85,8 +73,6 @@ public class MemberDAO extends SSI {
             if(rs.next()) {
                 cnt = rs.getInt(1);
             }
-            duplNickCheck = (cnt == 0);
-            System.out.println("닉넴중복: " + duplNickCheck);
         } catch(Exception e) {
             System.out.println("error: " + e);
             cnt = 999;

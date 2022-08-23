@@ -72,7 +72,7 @@
             <h1>⚡ L I G H T H O N ⚡</h1>
             <p>환영합니다.</p>
         </div>
-        <form action="/functions/signupSave.jsp" name="signUpForm" method="post"  enctype="multipart/form-data" onsubmit="return finalCheck()">
+        <form action="/functions/signupSave.jsp" name="signUpForm" method="post"  enctype="multipart/form-data" onsubmit="return checkNull()">
             <table>
                 <tr>
                     <th>아이디</th>
@@ -161,30 +161,34 @@
         }
     </script>
     <script type="text/javascript">
-        const finalCheck = () => {
-            console.log('jsp id dupl', <%=  SSI.duplIdCheck %> )
-            console.log('jsp nick dupl', <%= SSI.duplNickCheck %>)
-            if(<%= SSI.duplIdCheck && SSI.duplNickCheck %>) {
-                return checkNull();
-            } else {
-                if(!<%= SSI.duplIdCheck %>)
-                   alert("아이디 중복 체크 미완료");
-                if(!<%= SSI.duplNickCheck %>)
-                    alert("닉네임 중복 체크 미완료");
+        let duplId = false;
+        let duplNick = false;
+
+        const duplIdCheck = () => {
+            if(signUpForm.id.value==null || signUpForm.id.value==""){
+                signUpForm.id.focus();
                 return false;
             }
-        }
-        const duplIdCheck = () => {
+            duplId = true;
             window.open("popup/idCheck.jsp?id="+signUpForm.id.value, "bb", "width=600, height=150, top=400, left=400");
         }
 
         const duplNickCheck = () => {
+            if(signUpForm.nick.value==null || signUpForm.nick.value==""){
+                signUpForm.nick.focus();
+                return false;
+            }
+            duplNick = true;
             window.open("popup/nickCheck.jsp?nick="+signUpForm.nick.value, "bb", "width=600, height=150, top=400, left=400");
         }
 
         const checkNull = () => {
-            if (signUpForm.name.value === '' || signUpForm.phone.value === '' || signUpForm.email.value === '' || signUpForm.street.value === '') {
+            if (signUpForm.id.value === '' || signUpForm.nick.value === '' || signUpForm.name.value === '' || signUpForm.phone.value === '' || signUpForm.email.value === '' || signUpForm.street.value === '') {
                 var msg = '';
+                if(signUpForm.id.value === '')
+                    msg += '아이디 ';
+                if(signUpForm.nick.value === '')
+                    msg += '닉네임 ';
                 if(signUpForm.name.value === '')
                     msg += '이름 ';
                 if(signUpForm.phone.value === '')
@@ -194,9 +198,22 @@
                 if(signUpForm.street.value === '')
                     msg += '집 주소 ';
                 alert(msg + '미작성');
+                if(!duplId)
+                    alert("아이디 중복 체크 미완료");
+                if(!duplNick)
+                    alert("닉네임 중복 체크 미완료");
                 return false;
-            } else
-                return true;
+            } else {
+                if(!(duplId && duplNick)) {
+                    if(!duplId)
+                        alert("아이디 중복 체크 미완료");
+                    if(!duplNick)
+                        alert("닉네임 중복 체크 미완료");
+                    return false;
+                } else{
+                    return true;
+                }
+            }
         }
 
         const samePwCheck = () => {

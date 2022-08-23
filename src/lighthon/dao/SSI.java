@@ -20,7 +20,6 @@ public class SSI {
     String mId, mPw, mName, mNickName, mPhone, mEmail, mCity, mStreet, mFile;
     String SQL, SQL2, SQL3;
     int cnt, total;
-    public static boolean duplIdCheck, duplNickCheck;
 
     public static Connection getConnection() {
         Connection conn = null;

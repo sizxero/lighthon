@@ -19,6 +19,7 @@
 %>
 <script type="text/javascript">
     alert("이미 사용중인 아이디입니다.");
+    duplId = false;
     opener.signUpForm.id.value="";
     opener.signUpForm.id.focus();
     self.close();
@@ -28,7 +29,7 @@
 %>
 <script type="text/javascript">
     alert("사용가능한 아이디 입니다.");
-    console.log(opener.signUpForm.id.value)
+    duplId = true;
     opener.signUpForm.id.value= '<%=paramId%>';
     opener.signUpForm.pw.focus();
     self.close();
