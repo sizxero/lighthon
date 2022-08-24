@@ -91,11 +91,14 @@
         ReplyDTO rdto = dtos.get(i);
         int mNo = rdto.getMemberNo();
         CompactMemberInfoDTO mdto = dao2.findMemberByNoCompact(mNo);
+        String filename = "default.jpeg";
+        if(mdto.getFile() != null)
+            filename = mdto.getFile();
 %>
             <tr height="50px" id="reply-<%=rdto.getReplyNo()%>">
                 <td width="10%">
                     <div class="user-info">
-                        <img src="/storage/<%=mdto.getFile()%>" alt="">
+                        <img src="/storage/<%=filename%>" alt="">
                     </div>
                 </td>
                 <td width="75%">
@@ -126,12 +129,16 @@
     <%
         if((String) session.getAttribute("id") != null) {
             CompactMemberInfoDTO dto2 = dao2.findMemberByIdCompact((String) session.getAttribute("id") );
+            String filename = "default.jpeg";
+            if(dto2.getFile() != null)
+                filename = dto2.getFile();
+
     %>
     <table class="table table-bordered" id="write-reply-container">
         <tr height="50px">
             <td width="10%">
                 <div class="user-info">
-                    <img src="/storage/<%=dto2.getFile()%>" alt="">
+                    <img src="/storage/<%=filename%>" alt="">
                 </div>
             </td>
             <td width="75%"><p><%=dto2.getNick()%></p><textarea id="reply" name="reply"></textarea>
