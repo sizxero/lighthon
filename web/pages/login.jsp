@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="/commons/bootstrap4/bootstrap.min.css">
     <style>
         #thumb {
-            padding-top:30%;
+            padding-top:40%;
         }
         #login-btn {
             height: 50px;
@@ -23,6 +23,13 @@
         table tr td input {
             width: 100%;
         }
+
+        div#loading {
+            display: none;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+        }
     </style>
 </head>
 <body>
@@ -30,14 +37,14 @@
     <div id="thumb">
         <h1>⚡ L I G H T H O N ⚡</h1>
     </div>
-    <form action="/functions/loginCheck.jsp" method="post">
+    <form method="post">
         <table>
             <tbody>
                 <tr>
                     <th width="15%">ID</th>
                     <td width="60%"><input type="text" id="id" name="id"/></td>
                     <td width="25%" rowspan="2">
-                        <input type="submit" class="btn btn-warning" id="login-btn" value="LOGIN">
+                        <button class="btn btn-warning" id="login-btn">LOGIN</button>
                     </td>
                 </tr>
                 <tr>
@@ -51,6 +58,41 @@
         <a href="signup.jsp" class="btn btn-outline-warning">회원가입</a>
         <a href="" class="btn btn-outline-warning">ID/PW 찾기</a>
     </div>
+    <div id="loading">
+        <img width=100px" src="../images/ajax-loader.gif">
+    </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script>
+$(function() {
+    $('#login-btn').click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            url: "../functions/loginCheck.jsp",
+            type: "get",
+            data: {
+                id: $('input#id').val(),
+                pw: $('input#pw').val()
+            },
+            beforeSend: function() {
+                $('#loading').show();
+            },
+            always: function() {
+                setTimeout(function() {
+                    $('#loading').fadeOut( );
+                }, 500);
+            },
+            success: function() {
+                window.location.href = "../index.jsp";
+            },
+            error: function(err) {
+                alert('로그인에 실패했습니다.');
+                window.location.href = "login.jsp";
+            }
+        });
+    });
+})
+
+</script>
 </body>
 </html>

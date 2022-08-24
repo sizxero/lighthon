@@ -19,9 +19,8 @@
     MemberDAO dao = new MemberDAO();
     if (dao.login(paramId, paramPw)) {
         session.setAttribute("id", paramId);
-        response.sendRedirect("../index.jsp");
     } else {
-        response.sendRedirect("../index.jsp");
+        throw new Exception("로그인 실패");
     }
 %>
 </body>
