@@ -5,7 +5,8 @@
 <br>
 
 <h3>⚙️ 개발 근황 🔧</h3>
-<a href="https://www.notion.so/LIGHTHON-0749d85ffb594d10bc980153da7eb00b"><img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=Notion&logoColor=white&link=https://www.notion.so/LIGHTHON-0749d85ffb594d10bc980153da7eb00b"/></a>
+<a href="https://www.notion.so/LIGHTHON-ab929c826bca49d4b30bec9cbc1f249f"><img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=Notion&logoColor=white&link=https://www.notion.so/LIGHTHON-ab929c826bca49d4b30bec9cbc1f249f"/></a>
+
 - 22.08.24: 회원 관리, 게시판 관리 완료
 
 <h3>📂 디렉터리 구조</h3>
