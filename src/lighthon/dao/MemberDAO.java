@@ -270,7 +270,7 @@ public class MemberDAO extends SSI {
     }
 
     public ArrayList<MemberInfoDTO> findAllMembersSearchByRegion(String region, int start, int end) {
-        ArrayList<MemberInfoDTO> dtos = new ArrayList<>();
+        arrList = new ArrayList<MemberInfoDTO>();
         SQL = "select * from (select rownum rn, m_no, m_file, m_name, m_city from members where M_CITY like ? || '%') where rn between ? and ?";
         try {
             pstmt = conn.prepareStatement(SQL);
@@ -285,12 +285,12 @@ public class MemberDAO extends SSI {
                 mCity = rs.getString(5);
 
                 MemberInfoDTO dto = new MemberInfoDTO(mNo, mFile, mName, mCity);
-                dtos.add(dto);
+                arrList.add(dto);
             }
         } catch(Exception e) {
             System.out.println("error: " + e);
         }
-        return dtos;
+        return arrList;
     }
 
     public void insertMember(MemberDTO dto) {
