@@ -99,3 +99,7 @@ create sequence replies_seq;
 create sequence mi_seq;
 create sequence pi_seq;
 create sequence mp_seq;
+
+insert into  projects values (0, 'freeboard', '자유게시판', sysdate, sysdate, null, 0, 1);
+insert into boards values(0, 0);
+commit;
