@@ -1,5 +1,5 @@
 <%@ page import="lighthon.dao.BoardDAO" %>
-<%@ page import="lighthon.dao.PostDetailDTO" %><%--
+<%@ page import="lighthon.dto.boards.PostDetailDTO" %><%--
   Created by IntelliJ IDEA.
   User: gsu07
   Date: 2022-08-23

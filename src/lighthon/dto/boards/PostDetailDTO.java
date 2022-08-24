@@ -1,4 +1,4 @@
-package lighthon.dao;
+package lighthon.dto.boards;
 
 import java.util.Date;
 

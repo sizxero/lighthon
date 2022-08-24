@@ -1,6 +1,6 @@
 <%@ page import="lighthon.dao.BoardDAO" %>
 <%@ page import="lighthon.dto.boards.BoardDTO" %>
-<%@ page import="lighthon.dao.PostDetailDTO" %>
+<%@ page import="lighthon.dto.boards.PostDetailDTO" %>
 <%@ page import="lighthon.dto.members.MemberInfoDTO" %>
 <%@ page import="lighthon.dto.members.CompactMemberInfoDTO" %>
 <%@ page import="java.util.ArrayList" %>
@@ -29,12 +29,11 @@
             height: 100%;
         }
 
-        table#write-reply-container a{
-            width: 100px;
-            height: 100px;
+        table#write-reply-container button {
+            width: 100%;
+            height: 100%;
             line-height: 80px;
         }
-
         table img{
             width: 100px;
             height: 100px;
@@ -93,16 +92,31 @@
         int mNo = rdto.getMemberNo();
         CompactMemberInfoDTO mdto = dao2.findMemberByNoCompact(mNo);
 %>
-            <tr height="50px">
+            <tr height="50px" id="reply-<%=rdto.getReplyNo()%>">
                 <td width="10%">
                     <div class="user-info">
                         <img src="/storage/<%=mdto.getFile()%>" alt="">
                     </div>
                 </td>
-                <td width="80%"><p><%=mdto.getNick()%> / <%=rdto.getWdate()%></p>
+                <td width="75%">
+                    <p>
+                        <%=mdto.getNick()%> / <%=rdto.getWdate()%>
+                    </p>
                 <%=rdto.getContents()%>
                 </td>
-                <td width="10%"></td>
+                <td width="15%">
+                    <%
+                        if(session.getAttribute("id") != null) {
+                            String userid = (String)session.getAttribute("id");
+                            if(dao2.findNicknameById(userid).equals(mdto.getNick())) {
+                    %>
+                    <a class="reply-update">수정</a> /
+                    <a class="reply-delete">삭제</a>
+                    <%
+                            }
+                        }
+                    %>
+                </td>
             </tr>
 <%
     }
@@ -120,8 +134,9 @@
                     <img src="/storage/<%=dto2.getFile()%>" alt="">
                 </div>
             </td>
-            <td width="80%"><p><%=dto2.getNick()%></p><textarea id="reply" name="reply"></textarea></td>
-            <td width="10%"><button onclick="getInsertRoot(<%=paramPostNo%>)" class="btn btn-outline-warning">등록</button></td>
+            <td width="75%"><p><%=dto2.getNick()%></p><textarea id="reply" name="reply"></textarea>
+            </td>
+            <td width="15%" align="center"><button id="reply-btn" class="btn btn-outline-warning">등록</button></td>
         </tr>
     </table>
     <%
@@ -129,11 +144,92 @@
     %>
 
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript">
-    const getInsertRoot = (postNo) => {
-        let textarea = document.querySelector("textarea#reply");
-        window.location.href = '../functions/insertReply.jsp?postno=' + postNo + "&contents=" + textarea.value;
+    const replyBtn = $('button#reply-btn');
+    const textarea = document.querySelector("textarea#reply");
+
+    replyBtn.on('click', (e) => {
+        writeReply(<%=paramPostNo%>);
+    });
+
+    const writeReply = (postNo) => {
+        $.ajax({
+            url: "../functions/insertReply.jsp",
+            data: {
+                postno: postNo,
+                contents: textarea.value
+            },
+            success: function() {
+                alert('댓글을 등록했습니다.');
+                window.location.href=`post-detail.jsp?postno=<%=paramPostNo%>`;
+            },
+            error: function() {
+                alert('댓글을 등록하지 못했습니다.')
+            }
+        });
+    }
+
+    const updateReply = (replyNo) => {
+        $.ajax({
+            url: "../functions/update-reply.jsp",
+            data: {
+                rno: replyNo,
+                contents: textarea.value
+            },
+            success: function() {
+                alert('댓글을 수정했습니다.');
+                replyBtn.text('등록');
+                replyBtn.off('click');
+                replyBtn.on('click', (e) => {
+                    writeReply(<%=paramPostNo%>);
+                });
+                window.location.href=`post-detail.jsp?postno=<%=paramPostNo%>`;
+            },
+            error: function() {
+                alert('댓글을 수정하지 못했습니다.');
+            }
+        });
     };
+
+    $('.reply-update').on('click', (e) => {
+        let rId = $(e.target).parent().parent().attr("id").split('-')[1];
+        $.ajax({
+            url: "../functions/find-reply.jsp",
+            data: {
+                rno: Number(rId)
+            },
+            success: function(data) {
+                $('textarea#reply').val(data.contents);
+                replyBtn.text('수정');
+                replyBtn.off('click');
+                replyBtn.on('click', (e) => {
+                    updateReply(rId);
+                });
+            },
+            error: function(err) {
+                console.log(err);
+            }
+        });
+    });
+
+    $('.reply-delete').on('click', (e) => {
+        let rId = $(e.target).parent().parent().attr("id").split('-')[1];
+        $.ajax({
+            url: "../functions/delete-reply.jsp",
+            data: {
+                rno: Number(rId)
+            },
+            success: function(data) {
+                alert('댓글을 삭제했습니다.');
+                window.location.href=`post-detail.jsp?postno=<%=paramPostNo%>`;
+            },
+            error: function(err) {
+                alert('댓글을 삭제하지 못했습니다.');
+            }
+        });
+    });
+
 </script>
 </body>
 </html>

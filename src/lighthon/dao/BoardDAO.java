@@ -3,7 +3,6 @@ package lighthon.dao;
 import lighthon.dto.boards.*;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class BoardDAO extends SSI {
 
@@ -129,23 +128,18 @@ public class BoardDAO extends SSI {
     public ArrayList<ReplyDTO> findAllReply(int postId) {
         arrList = new ArrayList<ReplyDTO>();
         try {
-            SQL = "select * from replies where r_post_no=?";
+            SQL = "select * from replies where r_post_no=? order by r_no";
             pstmt = conn.prepareStatement(SQL);
             pstmt.setInt(1, postId);
             rs = pstmt.executeQuery();
             while(rs.next()){
-                ReplyDTO dto= new ReplyDTO(rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getDate(5));
+                ReplyDTO dto= new ReplyDTO(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getDate(5));
                 arrList.add(dto);
             }
         } catch (Exception e) {
             System.out.println("error: " + e);
         }
         return arrList;
-    }
-
-    public ReplyDTO findReply(int replyId) {
-        ReplyDTO dto = null;
-        return dto;
     }
 
     public void insertReply(InsertReplyDTO dto) {
@@ -162,11 +156,43 @@ public class BoardDAO extends SSI {
         }
     }
 
-    public void updateReply() {
-
+    public void updateReply(UpdateReplyDTO dto) {
+        try {
+            SQL = "update replies set r_contents=?, r_wdate=sysdate where r_no=?";
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setString(1, dto.getContents());
+            pstmt.setInt(2, dto.getrNo());
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
     }
 
-    public void deleteReply() {
+    public void deleteReply(int id) {
+        try {
+            SQL = "delete from replies where r_no=?";
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("error: " + e);
+        }
+    }
 
+    public ReplyDTO findReply(int id) {
+        ReplyDTO dto = null;
+        try {
+            SQL = "select * from replies where r_no=?";
+            pstmt = conn.prepareStatement(SQL);
+            pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                System.out.println(rs.getInt(1));
+                dto = new ReplyDTO(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getString(4), rs.getDate(5));
+            }
+        } catch(Exception e) {
+            System.out.println("error: " + e);
+        }
+        return dto;
     }
 }
