@@ -16,24 +16,9 @@
     String paramId = request.getParameter("id");
     MemberDAO dao = new MemberDAO();
     if(dao.isExistId(paramId)){
+        throw new Exception("아이디 중복");
+    }
 %>
-<script type="text/javascript">
-    alert("이미 사용중인 아이디입니다.");
-    duplId = false;
-    opener.signUpForm.id.value="";
-    opener.signUpForm.id.focus();
-    self.close();
-</script>
-<%
-}else{
-%>
-<script type="text/javascript">
-    alert("사용가능한 아이디 입니다.");
-    duplId = true;
-    opener.signUpForm.id.value= '<%=paramId%>';
-    opener.signUpForm.pw.focus();
-    self.close();
-</script>
-<%}%>
+
 </body>
 </html>

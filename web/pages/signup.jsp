@@ -160,6 +160,7 @@
             readImage(e.currentTarget);
         }
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script type="text/javascript">
         let duplId = false;
         let duplNick = false;
@@ -170,7 +171,25 @@
                 return false;
             }
             duplId = true;
-            window.open("popup/idCheck.jsp?id="+signUpForm.id.value, "bb", "width=600, height=150, top=400, left=400");
+            $.ajax({
+                url: '../functions/idCheck.jsp',
+                type: 'get',
+                data: {id: signUpForm.id.value},
+                success: function() {
+                    alert("사용할 수 있는 id입니다.");
+                    duplId = true;
+                    signUpForm.pw.focus();
+                    self.close();
+
+                },
+                error: function(err) {
+                    alert("이미 존재하는 id입니다.");
+                    duplId = false;
+                    signUpForm.id.value="";
+                    signUpForm.id.focus();
+                    self.close();
+                }
+            });
         }
 
         const duplNickCheck = () => {
@@ -179,7 +198,21 @@
                 return false;
             }
             duplNick = true;
-            window.open("popup/nickCheck.jsp?nick="+signUpForm.nick.value, "bb", "width=600, height=150, top=400, left=400");
+            $.ajax({
+                url: '../functions/nickCheck.jsp',
+                type: 'get',
+                data: {nick: signUpForm.nick.value},
+                success: function() {
+                    alert("사용할 수 있는 닉네임입니다.");
+                    signUpForm.phone.focus();
+                },
+                error: function(err) {
+                    alert("이미 존재하는 닉네임입니다.");
+                    duplNick = false;
+                    signUpForm.nick.value="";
+                    signUpForm.nick.focus();
+                }
+            });
         }
 
         const checkNull = () => {

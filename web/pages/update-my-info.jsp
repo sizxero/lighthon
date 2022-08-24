@@ -70,10 +70,10 @@
                 <td colspan="3"><input type="text" id="zipcode" name="zipcode" value=<%=dto.getZipCode()%>></td>
             </tr>
             <tr>
-                <td colspan="3"><input type="text" id="city" name="city" value=<%=dto.getCity()%>></td>
+                <td colspan="3"><input type="text" id="city" name="city" value="<%=dto.getCity()%>"></td>
             </tr>
             <tr>
-                <td colspan="3"><input type="text" id="street" name="street" value=<%=dto.getStreet()%>></td>
+                <td colspan="3"><input type="text" id="street" name="street" value="<%=dto.getStreet()%>"></td>
             </tr>
             <tr>
                 <th colspan="1">비밀번호</th>
@@ -84,24 +84,41 @@
                 <td colspan="3"><input type="password" id="pw_re" name="pw_re"></td>
             </tr>
             <input type="hidden" name="id" value=<%=(String)session.getAttribute("id")%>>
+            <input type="hidden" name="origin" value="<%=filename%>">
         </table>
         <input type="submit" class="btn btn-warning" value="수정">
         <a href="../index.jsp" class="btn btn-outline-warning">취소</a>
     </form>
 
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript">
     let duplNick = false;
 
     const duplNickCheck = () => {
+        console.log('click');
         if(updateForm.nick.value==null || updateForm.nick.value==""){
             updateForm.nick.focus();
             return false;
         }
         duplNick = true;
-        window.open("popup/changeNickCheck.jsp?nick="+updateForm.nick.value, "bb", "width=600, height=150, top=400, left=400");
+        $.ajax({
+            url: '../functions/nickCheck.jsp',
+            type: 'get',
+            data: {nick: updateForm.nick.value},
+            success: function() {
+                alert("사용할 수 있는 닉네임입니다.");
+                updateForm.email.focus();
+            },
+            error: function(err) {
+                alert("이미 존재하는 닉네임입니다.");
+                duplNick = false;
+                updateForm.nick.value="";
+                updateForm.nick.focus();
+            }
+        });
     }
-
     const checkNull = () => {
         if (updateForm.id.value === '' || updateForm.nick.value === '' || updateForm.name.value === '' || updateForm.phone.value === '' || updateForm.email.value === '' || updateForm.street.value === '') {
             var msg = '';
@@ -118,16 +135,9 @@
             if(updateForm.street.value === '')
                 msg += '집 주소 ';
             alert(msg + '미작성');
-            if(!duplNick)
-                alert("닉네임 중복 체크 미완료");
             return false;
         } else {
-            if(!duplNick) {
-                alert("닉네임 중복 체크 미완료");
-                return false;
-            } else{
-                return true;
-            }
+            return true;
         }
     }
 

@@ -30,8 +30,11 @@
     String m_street = multiReq.getParameter("street");
     String m_file = multiReq.getFilesystemName("file1");
     int m_size = 0;
-    if(m_file != null)
+    if(m_file == null) {
+        m_file = multiReq.getParameter("origin");
+    } else {
         m_size = (int)multiReq.getFile("file1").length();
+    }
 
     MemberDTO dto = new MemberDTO(m_id, m_pw, m_name, m_nickname, m_phone, m_email, m_zipcode, m_city, m_street, m_file, m_size);
     MemberDAO dao = new MemberDAO();

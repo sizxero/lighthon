@@ -35,7 +35,7 @@
 
     MemberDTO dto = new MemberDTO(m_id, m_pw, m_name, m_nickname, m_phone, m_email, m_zipcode, m_city, m_street, m_file, m_size);
     MemberDAO dao = new MemberDAO();
-    dao.updateMember(dto);
+    dao.insertMember(dto);
     response.sendRedirect("../pages/login.jsp");
 %>
 </body>
