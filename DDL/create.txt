@@ -5,7 +5,7 @@ create table members(
                         m_name varchar2(20) not null,
                         m_nickname varchar2(20) not null,
                         m_phone varchar2(20) not null,
-                        m_email varchar2(3) not null,
+                        m_email varchar2(30) not null,
                         m_zipcode number(5) not null,
                         m_city varchar2(100) not null,
                         m_street varchar2(50) not null,
