@@ -30,7 +30,7 @@
         <tr>
             <th rowspan="5" colspan="1" width="25%" align="center">
                 <div><img width="150px" height="150px" src="/storage/<%=dto.getFile()%>"></div>
-                <a class="btn btn-warning" href="/functions/downloadPicture.jsp?filename=<%=dto.getFile()%>">사진 다운로드</a>
+                <a class="btn btn-warning" href="/functions/download-picture.jsp?filename=<%=dto.getFile()%>">사진 다운로드</a>
             </th>
         </tr>
         <tr>

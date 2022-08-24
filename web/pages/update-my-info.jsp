@@ -37,7 +37,7 @@
 <div class="container" align="center">
     <p/>
     <h2 align="left">내 정보</h2>
-    <form action="/functions/updateSave.jsp" name="updateForm" method="post" enctype="multipart/form-data" onsubmit="return checkNull()" >
+    <form action="/functions/update-member.jsp" name="updateForm" method="post" enctype="multipart/form-data" onsubmit="return checkNull()" >
         <table class="table table-bordered">
             <tr>
                 <th rowspan="5" colspan="1" width="25%" align="center">
@@ -104,7 +104,7 @@
         }
         duplNick = true;
         $.ajax({
-            url: '../functions/nickCheck.jsp',
+            url: '../functions/nick-check.jsp',
             type: 'get',
             data: {nick: updateForm.nick.value},
             success: function() {

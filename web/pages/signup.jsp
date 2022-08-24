@@ -72,7 +72,7 @@
             <h1>⚡ L I G H T H O N ⚡</h1>
             <p>환영합니다.</p>
         </div>
-        <form action="/functions/signupSave.jsp" name="signUpForm" method="post"  enctype="multipart/form-data" onsubmit="return checkNull()">
+        <form action="/functions/signup.jsp" name="signUpForm" method="post" enctype="multipart/form-data" onsubmit="return checkNull()">
             <table>
                 <tr>
                     <th>아이디</th>
@@ -172,7 +172,7 @@
             }
             duplId = true;
             $.ajax({
-                url: '../functions/idCheck.jsp',
+                url: '../functions/id-check.jsp',
                 type: 'get',
                 data: {id: signUpForm.id.value},
                 success: function() {
@@ -199,7 +199,7 @@
             }
             duplNick = true;
             $.ajax({
-                url: '../functions/nickCheck.jsp',
+                url: '../functions/nick-check.jsp',
                 type: 'get',
                 data: {nick: signUpForm.nick.value},
                 success: function() {

@@ -34,7 +34,7 @@
 <body>
 <%@ include file="/commons/header.jsp"%>
 <div class="container" id="write-container">
-    <form action="../functions/writePostSave.jsp" method="post" class="form-container">
+    <form action="../functions/write-post.jsp" method="post" class="form-container">
         <table class="table table-borderless">
             <tr>
                 <th>제목</th>

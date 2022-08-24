@@ -40,7 +40,7 @@
     PostDetailDTO dto = dao.findPostById(paramPostNo);
 %>
 <div class="container" id="write-container">
-    <form action="../functions/updatePostSave.jsp?postno=<%=paramPostNo%>" method="post" class="form-container">
+    <form action="../functions/update-post.jsp?postno=<%=paramPostNo%>" method="post" class="form-container">
         <table class="table table-borderless">
             <tr>
                 <th>제목</th>

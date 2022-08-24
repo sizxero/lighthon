@@ -68,7 +68,7 @@ $(function() {
     $('#login-btn').click(function(e) {
         e.preventDefault();
         $.ajax({
-            url: "../functions/loginCheck.jsp",
+            url: "../functions/login-check.jsp",
             type: "get",
             data: {
                 id: $('input#id').val(),

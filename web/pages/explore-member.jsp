@@ -143,7 +143,6 @@
 
     <div id="pagination" align="center">
         <%
-            System.out.println(startPage + "~" + endPage);
             if(region == null || region.equals(""))
                 returnPage="explore-member.jsp?";
             else

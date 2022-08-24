@@ -74,8 +74,8 @@
                 String userid = (String)session.getAttribute("id");
                 if(dao2.findNicknameById(userid).equals(dto.getWriter())) {
         %>
-        <a href="updatePost.jsp?postno=<%=paramPostNo%>" class="btn btn-warning">수정</a>
-        <a href="../functions/deletePost.jsp?postno=<%=paramPostNo%>" class="btn btn-warning">삭제</a>
+        <a href="update-post.jsp?postno=<%=paramPostNo%>" class="btn btn-warning">수정</a>
+        <a href="../functions/delete-post.jsp?postno=<%=paramPostNo%>" class="btn btn-warning">삭제</a>
         <%
                 }
             }
@@ -155,7 +155,7 @@
 
     const writeReply = (postNo) => {
         $.ajax({
-            url: "../functions/insertReply.jsp",
+            url: "../functions/insert-reply.jsp",
             data: {
                 postno: postNo,
                 contents: textarea.value
